@@ -83,7 +83,7 @@
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="2dp"
 
-                    android:text="热点"
+                    android:text="消息"
                     />
             </LinearLayout>
         </RelativeLayout>
@@ -115,7 +115,7 @@
                     android:layout_height="wrap_content"
                     android:layout_gravity="center_horizontal"
                     android:layout_marginTop="2dp"
-                    android:text="喜欢"
+                    android:text="发现"
                      />
             </LinearLayout>
         </RelativeLayout>

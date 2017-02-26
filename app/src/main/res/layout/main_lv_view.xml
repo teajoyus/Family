@@ -1,0 +1,88 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+   >
+<LinearLayout
+    android:id="@+id/main_item_top"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="horizontal">
+    <com.example.view.CircleImageView
+        android:layout_width="50dp"
+        android:layout_height="50dp"
+android:src="@drawable/touxiang"
+        />
+<TextView
+    android:id="@+id/main_item_name"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:text="王大妈"
+    android:textColor="#7480bf"
+    android:gravity="top"
+    android:textSize="18sp"
+    android:padding="10dp"
+    />
+</LinearLayout>
+    <TextView
+        android:id="@+id/main_item_content"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginLeft="65dp"
+        android:layout_marginRight="15dp"
+        android:layout_below="@+id/main_item_top"
+        android:text="哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈啊哈哈哈哈哈哈哈哈啊"
+        android:textSize="16sp"
+        android:textColor="#a0000000"
+
+        />
+    <com.example.view.MyGridView
+        android:id="@+id/main_item_grid"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/main_item_content"
+        android:layout_marginLeft="65dp"
+        android:layout_marginRight="15dp"
+        android:numColumns="3"
+        android:columnWidth="70dp"
+        android:horizontalSpacing="10dp"
+        android:verticalSpacing="10dp"
+        ></com.example.view.MyGridView>
+
+<RelativeLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginRight="15dp"
+    android:layout_below="@+id/main_item_grid"
+    >
+    <TextView
+        android:id="@+id/main_item_dianzan"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="点赞12"
+        android:textSize="15sp"
+        android:textColor="#a0ffffff"
+        android:layout_alignParentRight="true"/>
+    <TextView
+        android:id="@+id/main_item_comment"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:text="评论12"
+        android:textSize="15sp"
+        android:textColor="#a0ffffff"
+        android:layout_toLeftOf="@+id/main_item_dianzan"
+        android:layout_marginRight="30dp"
+         />
+    <TextView
+        android:id="@+id/main_item_time"
+        android:layout_width="wrap_content"
+        android:layout_height="30dp"
+        android:layout_toLeftOf="@+id/main_item_comment"
+        android:layout_marginRight="30dp"
+        android:text="2017.2.26 12:00:00"
+        android:textColor="#a0ffffff"
+        android:textSize="12sp"
+
+        />
+</RelativeLayout>
+</RelativeLayout>
