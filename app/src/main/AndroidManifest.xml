@@ -34,6 +34,35 @@
         </activity>
         <activity android:name=".RegistActivity"></activity>
         <activity android:name=".IndexActivity"></activity>
+        <!--这是上传图片的-->
+        <activity
+            android:name="com.king.photo.activity.AddActivity">
+
+        </activity>
+        <activity
+            android:name="com.king.photo.activity.ImageGridActivity" android:screenOrientation="portrait" >
+        </activity>
+        <activity
+            android:name="com.king.photo.activity.TestPicActivity"
+            android:configChanges="orientation|keyboardHidden"
+            android:screenOrientation="portrait" />
+        <activity
+            android:name="com.king.photo.activity.PhotoActivity"
+            android:screenOrientation="portrait" />
+
+        <activity
+            android:name="com.king.photo.activity.AlbumActivity"
+            android:screenOrientation="portrait">
+        </activity>
+        <activity
+            android:name="com.king.photo.activity.ImageFile" >
+        </activity>
+        <activity
+            android:name="com.king.photo.activity.ShowAllPhoto" >
+        </activity>
+        <activity
+            android:name="com.king.photo.activity.GalleryActivity">
+        </activity>
     </application>
 
 </manifest>
