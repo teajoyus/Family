@@ -116,6 +116,7 @@ public class GalleryActivity extends Activity {
 		public void onClick(View v) {
 			intent.setClass(GalleryActivity.this, ImageFile.class);
 			startActivity(intent);
+			GalleryActivity.this.finish();
 		}
 	}
 	
@@ -148,6 +149,7 @@ public class GalleryActivity extends Activity {
 			finish();
 			intent.setClass(mContext,AddActivity.class);
 			startActivity(intent);
+			GalleryActivity.this.finish();
 		}
 
 	}

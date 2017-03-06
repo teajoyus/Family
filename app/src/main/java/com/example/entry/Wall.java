@@ -1,5 +1,7 @@
 package com.example.entry;
 
+import java.util.List;
+
 import cn.bmob.v3.BmobObject;
 
 /**
@@ -8,8 +10,7 @@ import cn.bmob.v3.BmobObject;
 public class Wall extends BmobObject{
     private String userId;
     private String userName;
-    private String url;
-    private  String tiem;
+    private List<String> url;
     private  String content;
     private int commentNum;
     private int dianzanNum;
@@ -30,21 +31,15 @@ public class Wall extends BmobObject{
         this.userName = userName;
     }
 
-    public String getUrl() {
+    public List<String> getUrl() {
         return url;
     }
 
-    public void setUrl(String url) {
+    public void setUrl(List<String> url) {
         this.url = url;
     }
 
-    public String getTiem() {
-        return tiem;
-    }
 
-    public void setTiem(String tiem) {
-        this.tiem = tiem;
-    }
 
     public String getContent() {
         return content;
@@ -75,8 +70,7 @@ public class Wall extends BmobObject{
         return "Wall{" +
                 "userId='" + userId + '\'' +
                 ", userName='" + userName + '\'' +
-                ", url='" + url + '\'' +
-                ", tiem='" + tiem + '\'' +
+                ", url=" + url +
                 ", content='" + content + '\'' +
                 ", commentNum=" + commentNum +
                 ", dianzanNum=" + dianzanNum +

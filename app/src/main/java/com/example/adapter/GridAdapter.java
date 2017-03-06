@@ -1,4 +1,4 @@
-package com.example.fragment;
+package com.example.adapter;
 
 import android.content.Context;
 import android.util.Log;
@@ -9,6 +9,8 @@ import android.widget.ImageView;
 
 import com.example.family.R;
 import com.example.tools.Tools;
+import com.king.photo.util.BitmapCache;
+import com.nostra13.universalimageloader.core.ImageLoader;
 
 import java.util.List;
 
@@ -44,13 +46,15 @@ public class GridAdapter extends BaseAdapter {
         ImageView imageView = null;
         if(convertView==null){
              imageView = new ImageView(context);
+            imageView.setScaleType(ImageView.ScaleType.FIT_XY);
             int i = Tools.dip2px(context,90);
             imageView.setLayoutParams(new ViewGroup.LayoutParams(i,i));
         }else{
             imageView = (ImageView)convertView;
         }
         Log.i("12","tea>>>p"+position);
-        imageView.setImageResource(R.drawable.touxiang);
+        ImageLoader.getInstance().displayImage(list.get(position),imageView);
+//        imageView.setImageResource(R.drawable.touxiang);
         return imageView;
     }
 }

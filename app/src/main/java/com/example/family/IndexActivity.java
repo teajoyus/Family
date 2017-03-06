@@ -6,6 +6,7 @@ import android.app.FragmentTransaction;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.widget.ImageView;
@@ -15,14 +16,16 @@ import android.widget.Toast;
 import com.example.fragment.MainFragment;
 import com.king.photo.activity.AddActivity;
 
+import org.xutils.view.annotation.ContentView;
 import org.xutils.view.annotation.Event;
 import org.xutils.view.annotation.ViewInject;
 import org.xutils.x;
 
-
+@ContentView(value = R.layout.activity_main)
 public class IndexActivity extends FragmentActivity  implements View.OnClickListener{
 
 
+    private static final String TAG = IndexActivity.class.getName();
     //4个fragment
     private MainFragment fragmentFirst;
     private MainFragment fragmentSecond;
@@ -48,13 +51,12 @@ public class IndexActivity extends FragmentActivity  implements View.OnClickList
 //            setContentView(R.layout.activity_main);
 //
 //        }
-
-        setContentView(R.layout.activity_main);
         x.view().inject(this);
         initViews();
         fragmentManager = getFragmentManager();
         //第一次启动时选中第0个tab
         setTabSelection(0);
+        Log.i(TAG,"tea>>>oncreate");
 
     }
 
@@ -79,8 +81,11 @@ public class IndexActivity extends FragmentActivity  implements View.OnClickList
         fourthLayout.setOnClickListener(this);
     }
 @Event(value = R.id.add_index_iv,type = View.OnClickListener.class)
-public void addFamily(View view){
-    startActivity(new Intent(IndexActivity.this, AddActivity.class));
+private void addFamily(View view){
+    Log.i(TAG,"tea>>>addFamily");
+    Intent intent= new Intent(IndexActivity.this, AddActivity.class);
+    intent.putExtra("isClear",true);
+    startActivity(intent);
 }
 
     @Override

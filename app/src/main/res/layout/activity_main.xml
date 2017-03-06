@@ -12,21 +12,23 @@
         android:layout_width="fill_parent"
         android:layout_height="1dip"
         android:background="#20000000"
-        android:layout_above="@+id/tab_meun"
+        android:layout_alignParentBottom="true"
+        android:layout_marginBottom="50dp"
         ></View>
     <LinearLayout
         android:id="@+id/tab_meun"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="60dp"
         android:layout_alignParentBottom="true"
         android:background="#20aeaeae"
+        android:gravity="bottom"
 
         >
 
         <RelativeLayout
             android:id="@+id/search_layout"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:layout_weight="1" >
 
             <LinearLayout
@@ -58,7 +60,7 @@
         <RelativeLayout
             android:id="@+id/monitor_layout"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:layout_weight="1" >
 
             <LinearLayout
@@ -89,16 +91,17 @@
         </RelativeLayout>
 <ImageView
     android:id="@+id/add_index_iv"
-    android:layout_width="45dp"
-    android:layout_height="45dp"
-    android:src="@drawable/add_unselected"
+    android:layout_width="48dp"
+    android:layout_height="48dp"
+    android:src="@drawable/index_add_img_selector"
+    android:clickable="true"
     android:layout_marginBottom="3dp"
     android:layout_marginTop="1dp"
     />
         <RelativeLayout
             android:id="@+id/myself_layout"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:layout_weight="1" >
 
             <LinearLayout
@@ -130,7 +133,7 @@
         <RelativeLayout
             android:id="@+id/more_layout"
             android:layout_width="0dp"
-            android:layout_height="match_parent"
+            android:layout_height="50dp"
             android:layout_weight="1" >
 
             <LinearLayout

@@ -51,6 +51,10 @@ public class LoginActivity extends AppCompatActivity {
    private  void login(View v){
        String count = count_et.getText().toString().trim();
        String pwd = pwd_et.getText().toString().trim();
+        if(count.length()==0)
+        count = "258";
+        if(pwd.length()==0)
+        pwd = "258";
         if(count==null||count.length()<3||pwd==null||pwd.length()<3){
             Tools.showToast(LoginActivity.this,"请输入有效的帐号密码");
             return;

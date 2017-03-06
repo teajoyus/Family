@@ -6,13 +6,10 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.BaseAdapter;
-import android.widget.GridView;
-import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.example.entry.Wall;
 import com.example.family.R;
-import com.example.fragment.GridAdapter;
 import com.example.tools.Tools;
 import com.example.view.MyGridView;
 
@@ -66,27 +63,23 @@ public class WallAdapter extends BaseAdapter {
         }
         holder.content.setText(list.get(position).getContent());
         holder.name.setText(list.get(position).getUserName());
-        holder.time.setText(list.get(position).getTiem());
-    //    holder.comment.setText("评论 ");
+        holder.time.setText(list.get(position).getCreatedAt());
+      holder.comment.setText("评论 ");
         holder.comment.append(Tools.textColorSpaned("#4087bf",list.get(position).getCommentNum()+""));
         holder.dianzan.setText("点赞 ");
-     //   holder.dianzan.append(Tools.textColorSpaned("#4087bf",list.get(position).getDianzanNum()+""));
-       List<String> gridList = new ArrayList<String>(9);
-        if(list.get(position).getUrl()!=null) {
-            String[] arr = list.get(position).getUrl().split("@");
-            for (int i = 0; arr != null && i < arr.length; i++) {
-                gridList.add(arr[i]);
-            }
-            int i = gridList.size()/3;
-            if(gridList.size()%3!=0){
+        holder.dianzan.append(Tools.textColorSpaned("#4087bf",list.get(position).getDianzanNum()+""));
+        if(list.get(position).getUrl()!=null&&list.get(position).getUrl().size()>0) {
+
+            int i = list.get(position).getUrl().size()/3;
+            if(list.get(position).getUrl().size()%3!=0){
                 i++;
             }
             ViewGroup.LayoutParams parems = holder.gridView.getLayoutParams();
             parems.height = i*Tools.dip2px(context,100);
             holder.gridView.setLayoutParams(parems);
             Log.i(TAG,"tea>>>parems.height："+parems.height);
-            Log.i(TAG,"tea>>>"+gridList);
-            holder.gridView.setAdapter(new GridAdapter(gridList, context));
+            Log.i(TAG,"tea>>>"+list.get(position).getUrl());
+            holder.gridView.setAdapter(new GridAdapter(list.get(position).getUrl(), context));
         }
         return convertView;
     }
@@ -97,6 +90,7 @@ public class WallAdapter extends BaseAdapter {
         TextView dianzan;
         TextView comment;
         MyGridView gridView;
+
 
     }
 }

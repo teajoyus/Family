@@ -111,10 +111,11 @@ public class AlbumActivity extends Activity {
 
 	// 取消按钮的监听
 	private class CancelListener implements OnClickListener {
-		public void onClick(View v) {
+		public void onClick(View v) {intent.setClass(mContext, AddActivity.class);
+//			startActiv
 			Bimp.tempSelectBitmap.clear();
-			intent.setClass(mContext, AddActivity.class);
-			startActivity(intent);
+//			ity(intent);
+			AlbumActivity.this.finish();
 		}
 	}
 
@@ -163,7 +164,7 @@ public class AlbumActivity extends Activity {
 							chooseBt.setVisibility(View.GONE);
 							if (!removeOneData(dataList.get(position))) {
 								Toast.makeText(AlbumActivity.this, Res.getString("only_choose_num"),
-										200).show();
+										Toast.LENGTH_SHORT).show();
 							}
 							return;
 						}

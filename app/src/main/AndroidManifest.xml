@@ -33,7 +33,9 @@
             </intent-filter>
         </activity>
         <activity android:name=".RegistActivity"></activity>
-        <activity android:name=".IndexActivity"></activity>
+        <activity android:name=".IndexActivity"
+            android:launchMode="singleTask"
+            ></activity>
         <!--这是上传图片的-->
         <activity
             android:name="com.king.photo.activity.AddActivity">

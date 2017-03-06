@@ -23,6 +23,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
 
+import cn.bmob.v3.BmobQuery;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.FindListener;
+
 /**
  */
 public class MainFragment extends Fragment {
@@ -50,6 +54,25 @@ public class MainFragment extends Fragment {
         initData();
     }
 
+    private void initData() {
+        BmobQuery<Wall> query = new BmobQuery<Wall>();
+        //返回50条数据，如果不加上这条语句，默认返回10条数据
+        query.setLimit(50);
+//执行查询方法
+        query.findObjects(new FindListener<Wall>() {
+            @Override
+            public void done(List<Wall> object, BmobException e) {
+                if(e==null){
+                   // toast("查询成功：共"+object.size()+"条数据。");
+                   list = object;
+                    handler.sendEmptyMessage(INIT_WALL);
+                }else{
+                    Log.i("bmob","失败："+e.getMessage()+","+e.getErrorCode());
+                }
+            }
+        });
+    }
+
     private void initHandler() {
         handler = new Handler(){
 
@@ -67,14 +90,13 @@ public class MainFragment extends Fragment {
         };
     }
 
-    private void initData() {
+    private void inittestData() {
         list = new ArrayList<Wall>();
         Random r = new Random();
         for(int i  = 0;i<30;i++){
             Wall w = new Wall();
             w.setUserName("王大妈");
             w.setContent("哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈哈");
-            w.setTiem("2017-2-26 12:00:12");
             w.setCommentNum(20);
             w.setDianzanNum(21);
             int size = r.nextInt(9);
@@ -85,7 +107,7 @@ public class MainFragment extends Fragment {
             }
             if(sb.length()>0){
                 sb.delete(sb.length()-1,sb.length());
-                w.setUrl(sb.toString());
+              //  w.setUrl(sb.toString());
             }
             list.add(w);
         }

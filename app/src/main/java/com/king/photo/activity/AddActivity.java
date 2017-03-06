@@ -26,20 +26,36 @@ import android.widget.AdapterView;
 import android.widget.AdapterView.OnItemClickListener;
 import android.widget.BaseAdapter;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.GridView;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.PopupWindow;
+import android.widget.ProgressBar;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.entry.UploadTest;
+import com.example.entry.Wall;
 import com.example.family.R;
+import com.example.tools.RunTime;
+import com.example.tools.Tools;
+import com.example.view.RoundProgressBar;
 import com.king.photo.util.Bimp;
 import com.king.photo.util.FileUtils;
 import com.king.photo.util.ImageItem;
 import com.king.photo.util.PublicWay;
 import com.king.photo.util.Res;
+
+import java.util.ArrayList;
+import java.util.List;
+
+import cn.bmob.v3.BmobObject;
+import cn.bmob.v3.datatype.BmobFile;
+import cn.bmob.v3.exception.BmobException;
+import cn.bmob.v3.listener.SaveListener;
+import cn.bmob.v3.listener.UploadBatchListener;
 
 
 /**
@@ -53,10 +69,13 @@ public class AddActivity extends Activity {
 	private PopupWindow pop = null;
 	private LinearLayout ll_popup;
 	public static Bitmap bimap ;
-	
+	private ProgressBar bar;
+	private EditText add_et;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Res.init(this);
+		boolean b = getIntent().getBooleanExtra("isClear",false);
+		if(b)Bimp.tempSelectBitmap.clear();
 		bimap = BitmapFactory.decodeResource(
 				getResources(),
 				R.drawable.icon_addpic_unfocused);
@@ -70,21 +89,108 @@ public class AddActivity extends Activity {
 			@Override
 			public void onClick(View v) {
 				// TODO Auto-generated method stub
-				StringBuffer sb = new StringBuffer();
-				for(ImageItem imageItem:Bimp.tempSelectBitmap){
-					sb.append(imageItem.imagePath+"\n");
+//				StringBuffer sb = new StringBuffer();
+//				for(ImageItem imageItem:Bimp.tempSelectBitmap){
+//					sb.append(imageItem.imagePath+"\n");
+//				}
+//				Toast.makeText(AddActivity.this, sb.toString(), Toast.LENGTH_SHORT).show();
+				String content = add_et.getText().toString().trim();
+				if(content.length()<1){
+					Tools.showToast(AddActivity.this,"说点什么吧");
+					return;
 				}
-				Toast.makeText(AddActivity.this, sb.toString(), Toast.LENGTH_SHORT).show();
+				if(Bimp.tempSelectBitmap.size()<1){
+					Tools.showToast(AddActivity.this,"先添加点图片吧");
+					return;
+				}
+				upload();
 			}
 		});
 	}
+public void  upload(){
+	final String filePaths[] = new String[Bimp.tempSelectBitmap.size()];
+	final int errorSize[] = new int[1];//上传失败的个数
+	final List<String> urlList = new ArrayList<String>();
+	for (int i=0;i<filePaths.length;i++){
+		filePaths[i] = Bimp.tempSelectBitmap.get(i).getImagePath();
+	}
+	if(bar==null){
+		bar = (ProgressBar) findViewById(R.id.add_progress);
+		bar.setVisibility(View.VISIBLE);
+		bar.setBackgroundColor(0x4087bf);
+		//设置滚动条可见
+		setProgressBarIndeterminateVisibility(true);
+	}
+	BmobFile.uploadBatch(filePaths, new UploadBatchListener() {
 
+		@Override
+		public void onSuccess(List<BmobFile> files,List<String> urls) {
+			Log.i("life","insertBatchDatasWithOne -onSuccess :"+urls.size()+"-----"+files+"----"+urls);
+//			if(urls.size()==1){//如果第一个文件上传完成
+//				UploadTest test =new UploadTest(files.get(urls.size()-1),""+urls.size());
+//				insertObject(test);
+//				//movies.add(movie);
+//			}else if(urls.size()==2){//第二个文件上传成功
+//				Movie movie1 =new Movie("哈利波特2",files.get(1));
+//				movies.add(movie1);
+//				insertBatch(movies);
+//			}
+			BmobFile file = files.get(urls.size()-1);
+			UploadTest test =new UploadTest(file,file.getFilename(),file.getFileUrl());
+			insertObject(test);
+			urlList.add(test.getUrl());
+			if(filePaths.length==(urls.size()-errorSize[0])){
+				bar.setVisibility(View.GONE);
+				Toast.makeText(AddActivity.this,"发表图片成功！",Toast.LENGTH_SHORT).show();
+				Wall wall = new Wall();
+				wall.setUserId(RunTime.user.getObjectId());
+				wall.setUserName(RunTime.user.getCount());
+				wall.setCommentNum(0);
+				wall.setDianzanNum(0);
+				wall.setUrl(urlList);
+				String content = add_et.getText().toString().trim();
+				wall.setContent(content);
+				insertObject(wall);
+				AddActivity.this.finish();
+			}
+		}
+
+		@Override
+		public void onError(int statuscode, String errormsg) {
+		//	ShowToast("错误码"+statuscode +",错误描述："+errormsg);
+			errorSize[0]++;
+		}
+
+		@Override
+		public void onProgress(int curIndex, int curPercent, int total,int totalPercent) {
+			//1、curIndex--表示当前第几个文件正在上传
+			//2、curPercent--表示当前上传文件的进度值（百分比）
+			//3、total--表示总的上传文件数
+			//4、totalPercent--表示总的上传进度（百分比）
+			bar.setProgress(totalPercent);
+		}
+	});
+}
+	private void insertObject(final BmobObject obj){
+		obj.save( new SaveListener() {
+
+			@Override
+			public void done(Object o, BmobException e) {
+//				if(e==null){
+//					Tools.showToast(AddActivity.this,"-->创建数据成功：" + obj.getObjectId());
+//				}else{
+//					Tools.showToast(AddActivity.this,"-->创建数据失败：" );
+//				}
+			}
+		});
+
+	}
 	public void Init() {
 		
 		pop = new PopupWindow(AddActivity.this);
 		
 		View view = getLayoutInflater().inflate(R.layout.item_popupwindows, null);
-
+		add_et = (EditText) findViewById(R.id.add_text_et);
 		ll_popup = (LinearLayout) view.findViewById(R.id.ll_popup);
 		
 		pop.setWidth(LayoutParams.MATCH_PARENT);
@@ -156,7 +262,24 @@ public class AddActivity extends Activity {
 				}
 			}
 		});
+		//取消返回
+		findViewById(R.id.activity_selectimg_canel).setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				AddActivity.this.finish();
+			}
+		});
 
+	}
+
+	@Override
+	public boolean dispatchKeyShortcutEvent(KeyEvent event) {
+		if(event.getAction()==KeyEvent.ACTION_DOWN){
+			if(event.getKeyCode()==KeyEvent.KEYCODE_BACK){
+				return true;
+			}
+		}
+		return super.dispatchKeyShortcutEvent(event);
 	}
 
 	@SuppressLint("HandlerLeak")
@@ -219,7 +342,7 @@ public class AddActivity extends Activity {
 
 			if (position ==Bimp.tempSelectBitmap.size()) {
 				holder.image.setImageBitmap(BitmapFactory.decodeResource(
-						getResources(), R.drawable.icon_addpic_unfocused));
+						getResources(), R.drawable.add_pic));
 				if (position == 9) {
 					holder.image.setVisibility(View.GONE);
 				}
