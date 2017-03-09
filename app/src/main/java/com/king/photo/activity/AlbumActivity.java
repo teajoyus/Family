@@ -12,6 +12,7 @@ import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.KeyEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -33,6 +34,7 @@ import com.king.photo.util.Res;
  * 这个是进入相册显示所有图片的界面
  */
 public class AlbumActivity extends Activity {
+	private static final String TAG ="AlbumActivity" ;
 	//显示手机里的所有图片的列表控件
 	private GridView gridView;
 	//当手机里没有图片时，提示用户没有图片的控件
@@ -67,7 +69,7 @@ public class AlbumActivity extends Activity {
 		//这个函数主要用来控制预览和完成按钮的状态
 		isShowOkBt();
 	}
-	
+
 	BroadcastReceiver broadcastReceiver = new BroadcastReceiver() {  
 		  
         @Override  
@@ -76,7 +78,17 @@ public class AlbumActivity extends Activity {
             // TODO Auto-generated method stub  
         	gridImageAdapter.notifyDataSetChanged();
         }  
-    };  
+    };
+
+	@Override
+	protected void onStop() {
+		super.onStop();
+	}
+
+	@Override
+	protected void onDestroy() {
+		super.onDestroy();
+	}
 
 	// 预览按钮的监听
 	private class PreviewListener implements OnClickListener {
@@ -90,16 +102,7 @@ public class AlbumActivity extends Activity {
 
 	}
 
-	// 完成按钮的监听
-	private class AlbumSendListener implements OnClickListener {
-		public void onClick(View v) {
-			overridePendingTransition(R.anim.activity_translate_in, R.anim.activity_translate_out);
-			intent.setClass(mContext, AddActivity.class);
-			startActivity(intent);
-			finish();
-		}
 
-	}
 
 	// 返回按钮监听
 	private class BackListener implements OnClickListener {
@@ -111,10 +114,10 @@ public class AlbumActivity extends Activity {
 
 	// 取消按钮的监听
 	private class CancelListener implements OnClickListener {
-		public void onClick(View v) {intent.setClass(mContext, AddActivity.class);
-//			startActiv
+		public void onClick(View v) {
+			//intent.setClass(mContext, AddActivity.class);
 			Bimp.tempSelectBitmap.clear();
-//			ity(intent);
+			unregisterReceiver(broadcastReceiver);
 			AlbumActivity.this.finish();
 		}
 	}
@@ -182,7 +185,14 @@ public class AlbumActivity extends Activity {
 					}
 				});
 
-		okButton.setOnClickListener(new AlbumSendListener());
+		okButton.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				Log.i(TAG,"tea>>>okButton");
+				unregisterReceiver(broadcastReceiver);
+				finish();
+			}
+		});
 
 	}
 
@@ -210,7 +220,7 @@ public class AlbumActivity extends Activity {
 			preview.setClickable(false);
 			okButton.setPressed(false);
 			okButton.setClickable(false);
-			okButton.setTextColor(Color.parseColor("#E1E0DE"));
+			//okButton.setTextColor(Color.parseColor("#E1E0DE"));
 			preview.setTextColor(Color.parseColor("#E1E0DE"));
 		}
 	}

@@ -106,8 +106,9 @@ public class ShowAllPhoto extends Activity {
 		public void onClick(View v) {
 			//清空选择的图片
 			Bimp.tempSelectBitmap.clear();
-			intent.setClass(mContext, AddActivity.class);
-			startActivity(intent);
+//			intent.setClass(mContext, AddActivity.class);
+//			startActivity(intent);
+			ShowAllPhoto.this.finish();
 		}
 	}
 
@@ -133,7 +134,7 @@ public class ShowAllPhoto extends Activity {
 						if (Bimp.tempSelectBitmap.size() >= PublicWay.num&&isChecked) {
 							button.setVisibility(View.GONE);
 							toggleButton.setChecked(false);
-							Toast.makeText(ShowAllPhoto.this, Res.getString("only_choose_num"), 200)
+							Toast.makeText(ShowAllPhoto.this, Res.getString("only_choose_num"), Toast.LENGTH_SHORT)
 									.show();
 							return;
 						}
@@ -163,9 +164,10 @@ public class ShowAllPhoto extends Activity {
 //					PublicWay.photoService.onActivityResult(0, -2,
 //							intent);
 //				}
-				intent.setClass(mContext, AddActivity.class);
-				startActivity(intent);
-				// Intent intent = new Intent();
+//				intent.setClass(mContext, AddActivity.class);
+//				startActivity(intent);
+//				// Intent intent = new Intent();
+				ShowAllPhoto.this.finish();
 				// Bundle bundle = new Bundle();
 				// bundle.putStringArrayList("selectedDataList",
 				// selectedDataList);

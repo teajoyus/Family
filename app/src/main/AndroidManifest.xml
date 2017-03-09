@@ -18,6 +18,23 @@
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
     <!--允许读取手机状态 用于创建BmobInstallation-->
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
+    <!--网络权限 -->
+    <uses-permission android:name="android.permission.INTERNET" />
+    <!-- 监听网络的变化 -->
+    <uses-permission android:name="android.permission.CHANGE_NETWORK_STATE" />
+    <!-- sd卡存储-->
+    <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
+    <!--摄像头-->
+    <uses-permission android:name="android.permission.CAMERA" />
+    <!--录音-->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    <!--通知震动-->
+    <uses-permission android:name="android.permission.VIBRATE" />
+    <!--bmob key-->
+
+
+
+
     <application
         android:name=".MyApp"
         android:allowBackup="true"
@@ -65,6 +82,38 @@
         <activity
             android:name="com.king.photo.activity.GalleryActivity">
         </activity>
+
+
+        <meta-data
+            android:name="Bmob_APP_KEY"
+            android:value="b67a173d6c4f9554026314b6793a5541" />
+
+        <!--IM-->
+        <receiver android:name="cn.bmob.newim.core.ConnectChangeReceiver" >
+            <intent-filter>
+                <action android:name="cn.bmob.action.RECONNECT" />
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE" />
+                <action android:name="android.intent.action.BOOT_COMPLETED" />
+                <action android:name="android.intent.action.USER_PRESENT" />
+            </intent-filter>
+        </receiver>
+        <service
+            android:name="cn.bmob.newim.core.service.BmobIMService"
+            android:process=":bmobcore" />
+        <service
+            android:name="cn.bmob.newim.core.service.NotifyService"
+            android:process=":bmobcore" />
+        <service android:name="cn.bmob.newim.core.service.ReConnectService" />
+        <service android:name="cn.bmob.newim.core.service.HeartBeatService" />
+
+        <!--IM消息接收器-->
+        <receiver
+            android:name="com.example.im.MessageReceiver"
+            android:enabled="true">
+            <intent-filter>
+                <action android:name="cn.bmob.im.action.MESSAGE"/>
+            </intent-filter>
+        </receiver>
     </application>
 
 </manifest>

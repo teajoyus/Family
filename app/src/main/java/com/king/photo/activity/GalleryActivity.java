@@ -146,9 +146,9 @@ public class GalleryActivity extends Activity {
 	// 完成按钮的监听
 	private class GallerySendListener implements OnClickListener {
 		public void onClick(View v) {
-			finish();
-			intent.setClass(mContext,AddActivity.class);
-			startActivity(intent);
+//			finish();
+//			intent.setClass(mContext,AddActivity.class);
+//			startActivity(intent);
 			GalleryActivity.this.finish();
 		}
 

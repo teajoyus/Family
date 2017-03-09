@@ -71,6 +71,7 @@ public class AddActivity extends Activity {
 	public static Bitmap bimap ;
 	private ProgressBar bar;
 	private EditText add_et;
+	private  String content;
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		Res.init(this);
@@ -94,7 +95,7 @@ public class AddActivity extends Activity {
 //					sb.append(imageItem.imagePath+"\n");
 //				}
 //				Toast.makeText(AddActivity.this, sb.toString(), Toast.LENGTH_SHORT).show();
-				String content = add_et.getText().toString().trim();
+				 content = add_et.getText().toString().trim();
 				if(content.length()<1){
 					Tools.showToast(AddActivity.this,"说点什么吧");
 					return;
@@ -107,7 +108,23 @@ public class AddActivity extends Activity {
 			}
 		});
 	}
-public void  upload(){
+
+	@Override
+	protected void onResume() {
+		if(content!=null&&content.length()>0){
+			add_et.setText(content);
+		}
+		super.onResume();
+
+	}
+
+	@Override
+	protected void onPause() {
+		 content = add_et.getText().toString().trim();
+		super.onPause();
+	}
+
+	public void  upload(){
 	final String filePaths[] = new String[Bimp.tempSelectBitmap.size()];
 	final int errorSize[] = new int[1];//上传失败的个数
 	final List<String> urlList = new ArrayList<String>();
@@ -144,11 +161,11 @@ public void  upload(){
 				Toast.makeText(AddActivity.this,"发表图片成功！",Toast.LENGTH_SHORT).show();
 				Wall wall = new Wall();
 				wall.setUserId(RunTime.user.getObjectId());
-				wall.setUserName(RunTime.user.getCount());
+				wall.setUserName(RunTime.user.getUsername());
 				wall.setCommentNum(0);
 				wall.setDianzanNum(0);
 				wall.setUrl(urlList);
-				String content = add_et.getText().toString().trim();
+				 content = add_et.getText().toString().trim();
 				wall.setContent(content);
 				insertObject(wall);
 				AddActivity.this.finish();

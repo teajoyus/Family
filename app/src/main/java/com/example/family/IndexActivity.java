@@ -13,6 +13,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.example.fragment.IMFragment;
+import com.example.fragment.IMFragment2;
 import com.example.fragment.MainFragment;
 import com.king.photo.activity.AddActivity;
 
@@ -28,8 +30,8 @@ public class IndexActivity extends FragmentActivity  implements View.OnClickList
     private static final String TAG = IndexActivity.class.getName();
     //4个fragment
     private MainFragment fragmentFirst;
-    private MainFragment fragmentSecond;
-    private MainFragment fragmentThird;
+    private IMFragment fragmentSecond;
+    private IMFragment2 fragmentThird;
     private MainFragment fragmentFourth;
     //用于对fragment进行管理
     private FragmentManager fragmentManager;
@@ -144,7 +146,7 @@ private void addFamily(View view){
                 secondText.setTextColor(0xFF4087BF);
                 if (fragmentSecond == null) {
                     // 如果ContactsFragment为空，则创建一个并添加到界面上
-                    fragmentSecond = new MainFragment();
+                    fragmentSecond = new IMFragment();
                     transaction.add(R.id.ly_content, fragmentSecond);
                 } else {
                     // 如果ContactsFragment不为空，则直接将它显示出来
@@ -157,7 +159,7 @@ private void addFamily(View view){
                 thirdText.setTextColor(0xFF4087BF);
                 if (fragmentThird == null) {
                     // 如果NewsFragment为空，则创建一个并添加到界面上
-                    fragmentThird = new MainFragment();
+                    fragmentThird = new IMFragment2();
                     transaction.add(R.id.ly_content, fragmentThird);
                 } else {
                     // 如果NewsFragment不为空，则直接将它显示出来
